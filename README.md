@@ -1,5 +1,7 @@
 # Superpowers
 
+Murphybread fork note: this repository can be used as a one-shot install bundle for Codex and Claude Code by cloning it and running `bash install.sh`.
+
 Superpowers is a complete software development workflow for your coding agents, built on top of a set of composable "skills" and some initial instructions that make sure your agent uses them.
 
 ## How it works
@@ -53,10 +55,11 @@ In Cursor Agent chat, install from marketplace:
 
 ### Codex
 
-Tell Codex:
+Clone the Murphybread fork and run:
 
-```
-Fetch and follow instructions from https://raw.githubusercontent.com/obra/superpowers/refs/heads/main/.codex/INSTALL.md
+```bash
+git clone https://github.com/murphybread/superpowers.git ~/.codex/superpowers
+bash ~/.codex/superpowers/install.sh
 ```
 
 **Detailed docs:** [docs/README.codex.md](docs/README.codex.md)

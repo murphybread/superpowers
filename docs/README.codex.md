@@ -1,13 +1,14 @@
-# Superpowers for Codex
+# Murphybread Superpowers for Codex
 
-Guide for using Superpowers with OpenAI Codex via native skill discovery.
+Guide for using the Murphybread fork with OpenAI Codex via native skill discovery.
 
 ## Quick Install
 
-Tell Codex:
+Clone the fork and run the installer:
 
-```
-Fetch and follow instructions from https://raw.githubusercontent.com/obra/superpowers/refs/heads/main/.codex/INSTALL.md
+```bash
+git clone https://github.com/murphybread/superpowers.git ~/.codex/superpowers
+bash ~/.codex/superpowers/install.sh
 ```
 
 ## Manual Installation
@@ -21,13 +22,12 @@ Fetch and follow instructions from https://raw.githubusercontent.com/obra/superp
 
 1. Clone the repo:
    ```bash
-   git clone https://github.com/obra/superpowers.git ~/.codex/superpowers
+   git clone https://github.com/murphybread/superpowers.git ~/.codex/superpowers
    ```
 
-2. Create the skills symlink:
+2. Run the installer:
    ```bash
-   mkdir -p ~/.agents/skills
-   ln -s ~/.codex/superpowers/skills ~/.agents/skills/superpowers
+   bash ~/.codex/superpowers/install.sh
    ```
 
 3. Restart Codex.
@@ -43,7 +43,7 @@ cmd /c mklink /J "$env:USERPROFILE\.agents\skills\superpowers" "$env:USERPROFILE
 
 ## How It Works
 
-Codex has native skill discovery — it scans `~/.agents/skills/` at startup, parses SKILL.md frontmatter, and loads skills on demand. Superpowers skills are made visible through a single symlink:
+Codex has native skill discovery — it scans `~/.agents/skills/` at startup, parses SKILL.md frontmatter, and loads skills on demand. The installer creates a single symlink:
 
 ```
 ~/.agents/skills/superpowers/ → ~/.codex/superpowers/skills/
@@ -60,7 +60,7 @@ Skills are discovered automatically. Codex activates them when:
 
 ### Personal Skills
 
-Create your own skills in `~/.agents/skills/`:
+This fork already bundles Murphybread custom skills inside `skills/`. Create additional personal skills in `~/.agents/skills/` if you want them to stay outside the repo:
 
 ```bash
 mkdir -p ~/.agents/skills/my-skill
@@ -85,6 +85,7 @@ The `description` field is how Codex decides when to activate a skill automatica
 
 ```bash
 cd ~/.codex/superpowers && git pull
+bash ~/.codex/superpowers/install.sh
 ```
 
 Skills update instantly through the symlink.
