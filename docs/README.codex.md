@@ -2,6 +2,8 @@
 
 Guide for using the Murphybread fork with OpenAI Codex via native skill discovery.
 
+For Claude Code specifics, including the difference between local skills and plugin marketplace state, see [README.claude.md](README.claude.md).
+
 ## Quick Install
 
 Run the bootstrap installer:

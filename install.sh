@@ -160,6 +160,8 @@ main() {
     install_claude_skills
 
     log "Install complete"
+    log "Local Claude skills were installed into ~/.claude/skills"
+    log "Claude plugin marketplace state under ~/.claude/plugins was not modified"
     log "Restart Codex and Claude Code to pick up the updated prompts and skills"
 }
 

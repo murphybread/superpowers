@@ -45,6 +45,10 @@ Then install the plugin from this marketplace:
 /plugin install superpowers@superpowers-marketplace
 ```
 
+If you want only the portable Murphybread prompt files and local skills, you do not need the marketplace plugin. Use the bootstrap installer instead.
+
+**Detailed docs:** [docs/README.claude.md](docs/README.claude.md)
+
 ### Cursor (via Plugin Marketplace)
 
 In Cursor Agent chat, install from marketplace:
