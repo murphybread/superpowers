@@ -31,7 +31,15 @@ trap 'rm -rf "$TMP_HOME" "$TMP_WORK"' EXIT
 SOURCE_REPO="$TMP_WORK/source-repo"
 BOOTSTRAP_DIR="$TMP_WORK/bootstrap"
 
-git clone "$REPO_ROOT" "$SOURCE_REPO" >/dev/null 2>&1
+cp -a "$REPO_ROOT" "$SOURCE_REPO"
+rm -rf "$SOURCE_REPO/.git"
+git -C "$SOURCE_REPO" init >/dev/null 2>&1
+git -C "$SOURCE_REPO" config user.name test >/dev/null 2>&1
+git -C "$SOURCE_REPO" config user.email test@example.com >/dev/null 2>&1
+git -C "$SOURCE_REPO" checkout -b main >/dev/null 2>&1
+git -C "$SOURCE_REPO" add -A >/dev/null 2>&1
+git -C "$SOURCE_REPO" commit -m "test bootstrap source" >/dev/null 2>&1
+
 mkdir -p "$BOOTSTRAP_DIR"
 cp "$REPO_ROOT/install.sh" "$BOOTSTRAP_DIR/install.sh"
 
@@ -43,6 +51,8 @@ bash "$BOOTSTRAP_DIR/install.sh"
 assert_file_exists "$TMP_HOME/.codex/AGENTS.md"
 assert_file_exists "$TMP_HOME/.claude/CLAUDE.md"
 assert_symlink_target "$TMP_HOME/.agents/skills/superpowers" "$TMP_HOME/.codex/superpowers/skills"
+assert_symlink_target "$TMP_HOME/.claude/skills/managing-kanban" "$TMP_HOME/.codex/superpowers/skills/managing-kanban"
+assert_symlink_target "$TMP_HOME/.claude/skills/writing-results" "$TMP_HOME/.codex/superpowers/skills/writing-results"
 
 cmp -s "$SOURCE_REPO/AGENTS.md" "$TMP_HOME/.codex/AGENTS.md" || fail "Installed AGENTS.md does not match source repo"
 cmp -s "$SOURCE_REPO/CLAUDE.md" "$TMP_HOME/.claude/CLAUDE.md" || fail "Installed CLAUDE.md does not match source repo"

@@ -75,6 +75,35 @@ install_skills_symlink() {
     log "Linked skills directory"
 }
 
+install_claude_skills() {
+    local claude_skills_dir="$HOME/.claude/skills"
+    mkdir -p "$claude_skills_dir"
+
+    local skill_path
+    for skill_path in "$REPO_ROOT"/skills/*; do
+        [ -d "$skill_path" ] || continue
+
+        local skill_name
+        skill_name="$(basename "$skill_path")"
+
+        local destination_path="$claude_skills_dir/$skill_name"
+        if [ -L "$destination_path" ]; then
+            local current_target
+            current_target="$(readlink "$destination_path")"
+            if [ "$current_target" = "$skill_path" ]; then
+                continue
+            fi
+        fi
+
+        if [ -e "$destination_path" ] || [ -L "$destination_path" ]; then
+            backup_target "$destination_path" || true
+        fi
+
+        ln -s "$skill_path" "$destination_path"
+        log "Linked Claude skill $skill_name"
+    done
+}
+
 require_file() {
     local path="$1"
     [ -f "$path" ] || {
@@ -128,6 +157,7 @@ main() {
     install_prompt_file "$REPO_ROOT/AGENTS.md" "$HOME/.codex/AGENTS.md"
     install_prompt_file "$REPO_ROOT/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
     install_skills_symlink
+    install_claude_skills
 
     log "Install complete"
     log "Restart Codex and Claude Code to pick up the updated prompts and skills"

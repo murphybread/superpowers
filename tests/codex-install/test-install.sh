@@ -45,6 +45,8 @@ HOME="$TMP_HOME" bash "$REPO_ROOT/install.sh"
 assert_file_exists "$TMP_HOME/.codex/AGENTS.md"
 assert_file_exists "$TMP_HOME/.claude/CLAUDE.md"
 assert_symlink_target "$TMP_HOME/.agents/skills/superpowers" "$REPO_ROOT/skills"
+assert_symlink_target "$TMP_HOME/.claude/skills/managing-kanban" "$REPO_ROOT/skills/managing-kanban"
+assert_symlink_target "$TMP_HOME/.claude/skills/writing-results" "$REPO_ROOT/skills/writing-results"
 
 cmp -s "$REPO_ROOT/AGENTS.md" "$TMP_HOME/.codex/AGENTS.md" || fail "Installed AGENTS.md does not match repository copy"
 cmp -s "$REPO_ROOT/CLAUDE.md" "$TMP_HOME/.claude/CLAUDE.md" || fail "Installed CLAUDE.md does not match repository copy"
