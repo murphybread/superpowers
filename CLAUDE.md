@@ -30,28 +30,33 @@
 - **Naming & Navigation:** Use domain-based naming for packages and files. Pattern: {Domain}{Concern} for domain-specific (UserValidation), Common{Concern} for shared (CommonValidation). A new team member should locate any file by knowing only the domain name and concern type.
 - **Reuse Check:** Before adding new logic (creating a new file or appending a method/block to an existing file), run the project's filtered directory tree to review the current structure (e.g., `tree -L 3 -I 'node_modules|build|dist|.git|.gradle|tokens|snap|out|target|bin|logs|tmp|cache'`). If the tree output reveals existing files with the same or similar concern, inspect their contents and reuse them first. When intentionally writing new logic despite existing alternatives, state the reason in the commit message. Simple modifications (bug fixes, renaming, value changes) are exempt.
 
-## (EN) Docs Markdown Filename
+## Docs
 
-* **Rule:** Every `*.md` under `docs/` must include `phase + project_scope + doc_type + topic`, and append `created date + revision` for update tracking.
-* **Format:** `docs/{phase}-{project_scope}-{doc_type}-{topic}__cYYYYMMDD__rNN.md`
-* **Examples:** `docs/Phase4-1-pull-ledger-gmail-infra-setup__c20260222__r03.md`, `docs/Phase3-0-pull-ledger-oauth-mcp-troubleshooting__c20260210__r05.md`
-* **Notes:** No spaces, use `kebab-case`. Increment `rNN` on meaningful updates. If no phase, use `misc` (e.g., `docs/misc-pull-ledger-network-checklist__c20260222__r01.md`).
+* **Priority Rule:** When a skill and a generic guide both apply, follow the more specific rule for the target path. Path-scoped rules override generic `docs/` rules.
+* **Plans:** Files under `docs/plans/` follow the `writing-plans` workflow and must use `docs/plans/YYYY-MM-DD-topic.md`.
+* **Reports:** Files under `docs/reports/` follow the `writing-results` workflow and must use `docs/reports/YYYY-MM-DD-topic-report.md`.
+* **General Docs:** New markdown files outside `docs/plans/` and `docs/reports/` must use `docs/{category}-{project_scope}-{topic}__cYYYYMMDD__rNN.md`.
+* **General Doc Categories:** Prefer clear categories such as `analysis`, `design`, `guide`, `infra`, `incident`, `ops`, `reference`, or `misc`.
+* **Legacy Phase Docs:** Existing `docs/Phase*` files are historical records. Do not create new `Phase*` files. Migrate a legacy Phase doc only when you are already updating its content.
+* **Notes:** Use `kebab-case`, avoid spaces, and increment `rNN` on meaningful updates.
 
 ---
 # [제목]
 
 본 문서는 처음 합류하는 개발자도 맥락을 이해할 수 있도록 비즈니스 문서 형식으로 작성해주세요.
 Public/Private 레포에 따라 익명화 수준이 다릅니다. 하단 익명화 확인 항목을 참고해주세요.
+`docs/plans/` and `docs/reports/` should use their workflow-specific templates instead of this generic template.
 
 ## 개요
 - 프로젝트:
 - 공개 범위: (Public / Private)
+- 문서 분류:
 - 한 줄 요약: (Why + What)
 - 영향 범위: (API / DB / UI / 배포 등)
 - 수정 파일 / 참조 커밋:
 - 일시:
 - 버전:
-- Phase:
+- 상태:
 - 의도:
 - 동작:
 
