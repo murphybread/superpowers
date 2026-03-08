@@ -3,6 +3,10 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" && pwd)"
+DEFAULT_INSTALL_DIR="$HOME/.codex/superpowers"
+INSTALL_ROOT="${SUPERPOWERS_INSTALL_DIR:-$DEFAULT_INSTALL_DIR}"
+REPO_URL="${SUPERPOWERS_REPO_URL:-https://github.com/murphybread/superpowers.git}"
+REPO_BRANCH="${SUPERPOWERS_REPO_BRANCH:-main}"
 REPO_ROOT="$SCRIPT_DIR"
 MANAGED_MARKER="Managed by murphybread/superpowers install.sh"
 TIMESTAMP="$(date -u +%Y%m%dT%H%M%SZ)"
@@ -79,7 +83,43 @@ require_file() {
     }
 }
 
+is_repo_install_context() {
+    [ -f "$SCRIPT_DIR/AGENTS.md" ] && [ -f "$SCRIPT_DIR/CLAUDE.md" ] && [ -d "$SCRIPT_DIR/skills" ]
+}
+
+bootstrap_repo_if_needed() {
+    mkdir -p "$(dirname "$INSTALL_ROOT")"
+
+    if [ -d "$INSTALL_ROOT/.git" ]; then
+        log "Updating bundled repository from $REPO_URL ($REPO_BRANCH)"
+        git -C "$INSTALL_ROOT" pull --ff-only "$REPO_URL" "$REPO_BRANCH"
+    else
+        if [ -e "$INSTALL_ROOT" ]; then
+            printf 'Install directory exists but is not a git repository: %s\n' "$INSTALL_ROOT" >&2
+            exit 1
+        fi
+        log "Cloning bundled repository from $REPO_URL ($REPO_BRANCH)"
+        git clone --branch "$REPO_BRANCH" "$REPO_URL" "$INSTALL_ROOT"
+    fi
+}
+
+run_local_install() {
+    REPO_ROOT="$INSTALL_ROOT" SUPERPOWERS_BOOTSTRAPPED=1 bash "$INSTALL_ROOT/install.sh" "$@"
+}
+
 main() {
+    if [ "${SUPERPOWERS_BOOTSTRAPPED:-0}" != "1" ] && ! is_repo_install_context; then
+        bootstrap_repo_if_needed
+        run_local_install "$@"
+        return 0
+    fi
+
+    if is_repo_install_context; then
+        REPO_ROOT="$SCRIPT_DIR"
+    else
+        REPO_ROOT="$INSTALL_ROOT"
+    fi
+
     require_file "$REPO_ROOT/AGENTS.md"
     require_file "$REPO_ROOT/CLAUDE.md"
 

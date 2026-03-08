@@ -8,12 +8,17 @@ Enable the Murphybread fork in Codex with one installer script. Clone the fork, 
 
 ## Installation
 
-1. **Clone the Murphybread fork:**
+1. **Fastest install from a fresh environment:**
+   ```bash
+   bash <(curl -fsSL https://raw.githubusercontent.com/murphybread/superpowers/main/install.sh)
+   ```
+
+2. **Or clone the Murphybread fork manually:**
    ```bash
    git clone https://github.com/murphybread/superpowers.git ~/.codex/superpowers
    ```
 
-2. **Run the installer:**
+3. **Run the installer:**
    ```bash
    bash ~/.codex/superpowers/install.sh
    ```
@@ -23,7 +28,7 @@ Enable the Murphybread fork in Codex with one installer script. Clone the fork, 
    bash "$env:USERPROFILE\.codex\superpowers\install.sh"
    ```
 
-3. **Restart Codex** (quit and relaunch the CLI) to discover the skills.
+4. **Restart Codex** (quit and relaunch the CLI) to discover the skills.
 
 ## Migrating from old bootstrap
 

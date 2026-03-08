@@ -4,7 +4,13 @@ Guide for using the Murphybread fork with OpenAI Codex via native skill discover
 
 ## Quick Install
 
-Clone the fork and run the installer:
+Run the bootstrap installer:
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/murphybread/superpowers/main/install.sh)
+```
+
+Or clone the fork and run the installer:
 
 ```bash
 git clone https://github.com/murphybread/superpowers.git ~/.codex/superpowers
